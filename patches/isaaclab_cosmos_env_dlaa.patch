@@ -1,0 +1,17 @@
+diff --git a/source/isaaclab_tasks/isaaclab_tasks/manager_based/manipulation/stack/config/franka/stack_ik_rel_visuomotor_cosmos_env_cfg.py b/source/isaaclab_tasks/isaaclab_tasks/manager_based/manipulation/stack/config/franka/stack_ik_rel_visuomotor_cosmos_env_cfg.py
+index 699d617..df63926 100644
+--- a/source/isaaclab_tasks/isaaclab_tasks/manager_based/manipulation/stack/config/franka/stack_ik_rel_visuomotor_cosmos_env_cfg.py
++++ b/source/isaaclab_tasks/isaaclab_tasks/manager_based/manipulation/stack/config/franka/stack_ik_rel_visuomotor_cosmos_env_cfg.py
+@@ -153,8 +153,10 @@ class FrankaCubeStackVisuomotorCosmosEnvCfg(stack_ik_rel_visuomotor_env_cfg.Fran
+         )
+ 
+         # Set settings for camera rendering
+-        self.num_rerenders_on_reset = 1
+-        self.sim.render.antialiasing_mode = "OFF"
++        # cosmos_demo patch: the stock "OFF"/1 settings leave Isaac Sim 6.0.1's RealTimePathTracing
++        # undenoised (per-pixel speckle in every frame); the plain visuomotor config's values are used instead.
++        self.num_rerenders_on_reset = 3
++        self.sim.render.antialiasing_mode = "DLAA"
+ 
+         # List of image observations in policy observations
+         self.image_obs_list = ["table_cam", "wrist_cam"]

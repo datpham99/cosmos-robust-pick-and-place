@@ -1,0 +1,4 @@
+p4_v2_600_shift_combined CosmosDemo-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-Shift-v0 $CKPT_P4 all
+p3_v2_600_shift_combined CosmosDemo-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-Shift-v0 $CKPT_P3 all
+p2_v2_600_shift_combined CosmosDemo-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-Shift-v0 $CKPT_P2 all
+p1_v2_600_shift_combined CosmosDemo-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-Shift-v0 $CKPT_P1 all

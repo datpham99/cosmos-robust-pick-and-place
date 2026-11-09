@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.egg-info/
+*.hdf5
+*.pth
+*.log
+*.log.vram
+*.mp4
+datasets/large
+results/demo_clips/
+results/headline.svg
+.DS_Store

@@ -1,0 +1,48 @@
+diff --git a/cosmos_transfer1/utils/base_world_generation_pipeline.py b/cosmos_transfer1/utils/base_world_generation_pipeline.py
+index 418eda4..93554ee 100644
+--- a/cosmos_transfer1/utils/base_world_generation_pipeline.py
++++ b/cosmos_transfer1/utils/base_world_generation_pipeline.py
+@@ -231,6 +231,12 @@ class BaseWorldGenerationPipeline(ABC):
+         Returns:
+             bool: True if prompt passes all safety checks, False otherwise
+         """
++        # Cosmos_demo patch: memoize the verdict per prompt string (same prompt, same verdict) so the text
++        # guardrail is not reloaded for repeated prompts; every generated video is still checked.
++        cache = self.__dict__.setdefault("_prompt_guardrail_cache", {})
++        if prompt in cache:
++            return cache[prompt]
++
+         if self.offload_guardrail_models:
+             self._load_text_guardrail()
+ 
+@@ -238,6 +244,7 @@ class BaseWorldGenerationPipeline(ABC):
+ 
+         if self.offload_guardrail_models:
+             self._offload_guardrail_models()
++        cache[prompt] = is_safe
+ 
+         return is_safe
+ 
+@@ -318,6 +325,14 @@ class BaseWorldGenerationPipeline(ABC):
+         Note:
+             T5 model is offloaded after encoding if enabled.
+         """
++        # Cosmos_demo patch: memoize per prompt list so a batch whose rows repeat a prompt (segments of one
++        # episode) does not reload the offloaded T5-11B for every row.
++        key = tuple(prompts)
++        cache = self.__dict__.setdefault("_t5_cache", {})
++        if key in cache:
++            embeddings, masks = cache[key]
++            return [e.cuda() for e in embeddings], [m.cuda() if m is not None else None for m in masks]
++
+         if self.offload_text_encoder_model:
+             self._load_text_encoder_model()
+ 
+@@ -325,6 +340,7 @@ class BaseWorldGenerationPipeline(ABC):
+ 
+         if self.offload_text_encoder_model:
+             self._offload_text_encoder_model()
++        cache[key] = ([e.cpu() for e in embeddings], [m.cpu() if m is not None else None for m in masks])
+         return embeddings, masks
+ 
+     def _run_tokenizer_decoding(self, samples: torch.Tensor) -> np.ndarray:

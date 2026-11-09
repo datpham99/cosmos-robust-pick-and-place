@@ -1,0 +1,4 @@
+p1_v2_600_ep160 Isaac-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-v0 $CKPT_P1 -
+p2_v2_600_ep600 Isaac-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-v0 $CKPT_P2 -
+p3_v2_600_ep600 Isaac-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-v0 $CKPT_P3 -
+p4_v2_600_ep600 Isaac-Stack-Cube-Franka-IK-Rel-Visuomotor-Cosmos-v0 $CKPT_P4 -

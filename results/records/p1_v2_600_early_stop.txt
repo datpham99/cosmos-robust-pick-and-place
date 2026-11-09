@@ -1,0 +1,1 @@
+stopped_at_epoch=187 reason=flat best_median_epoch=157 best_median_loss=-29.758 chosen_checkpoint=160 final_epoch=600 final_loss=-31.734
